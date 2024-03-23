@@ -11,12 +11,20 @@ import {ConfigService} from "/services/config.service";
  *     responses:
  *       200:
  *         description: Success Response
- *       500:
- *         description: Internal Server Error
  *       405:
  *         description: Method Not Allowed
+ *       500:
+ *         description: Internal Server Error
  */
 export default async function handler(req, res) {
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + ConfigService.themoviedb.keys.API_TOKEN
+        }
+    };
+
     switch (req.method) {
         case "GET":
             try {
@@ -34,13 +42,6 @@ export default async function handler(req, res) {
 
                 for (const movie of likedMovies) {
                     const url = ConfigService.themoviedb.urls.movies.movie + '/' + movie.idTMDB;
-                    const options = {
-                        method: 'GET',
-                        headers: {
-                            accept: 'application/json',
-                            Authorization: 'Bearer ' + ConfigService.themoviedb.keys.API_TOKEN
-                        }
-                    };
 
                     const movieDetailsResponse = await fetch(url, options).then(r => r.json());
 
@@ -65,14 +66,7 @@ export default async function handler(req, res) {
 
                 const discoverUrl = `${ConfigService.themoviedb.urls.movies.discover}?${genreQueryString}`;
 
-                const discoverOptions = {
-                    method: 'GET',
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: 'Bearer ' + ConfigService.themoviedb.keys.API_TOKEN
-                    }
-                };
-                const discoverApiResponse = await fetch(discoverUrl, discoverOptions).then(r => r.json());
+                const discoverApiResponse = await fetch(discoverUrl, options).then(r => r.json());
                 res.json({status: 200, data: discoverApiResponse.results});
             } catch (error) {
                 console.error('Error:', error);

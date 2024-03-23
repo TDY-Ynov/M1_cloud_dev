@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { ConfigService } from "/services/config.service";
+import {ConfigService} from "/services/config.service";
 
 /**
  * @swagger
@@ -20,37 +20,37 @@ import { ConfigService } from "/services/config.service";
  *         description: Bad Request
  *       405:
  *         description: Method Not Allowed
+ *       500:
+ *         description: Internal Server Error
  */
 
 export default async function handler(req, res) {
+    const {query} = req.query;
+    if (!query) {
+        res.status(400).json({status: 400, error: "Bad Request", message: "Missing 'query' parameter."});
+        return;
+    }
+
+    const url = `${ConfigService.themoviedb.urls.movies.search}?query=${encodeURIComponent(query)}`;
+    const options = {
+        method: 'GET', headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + ConfigService.themoviedb.keys.API_TOKEN
+        }
+    };
+
     switch (req.method) {
         case "GET":
             try {
-                const { query } = req.query;
-
-                if (!query) {
-                    res.status(400).json({ status: 400, error: "Bad Request", message: "Missing 'query' parameter." });
-                    return;
-                }
-
-                const url = `${ConfigService.themoviedb.urls.movies.search}?query=${encodeURIComponent(query)}`;
-                const options = {
-                    method: 'GET',
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: 'Bearer ' + ConfigService.themoviedb.keys.API_TOKEN
-                    }
-                };
-
                 const apiResponse = await fetch(url, options).then(r => r.json());
-                res.json({ status: 200, data: apiResponse.results });
+                res.json({status: 200, data: apiResponse.results});
             } catch (error) {
                 console.error('Error:', error);
-                res.status(500).json({ status: 500, error: 'Internal Server Error' });
+                res.status(500).json({status: 500, error: 'Internal Server Error'});
             }
             break;
 
         default:
-            res.status(405).json({ status: 405, error: "Method Not Allowed" });
+            res.status(405).json({status: 405, error: "Method Not Allowed"});
     }
 }

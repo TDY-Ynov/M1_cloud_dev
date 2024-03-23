@@ -15,11 +15,13 @@ import {ConfigService} from "../../../services/config.service";
  *     responses:
  *       200:
  *         description: Success Response
+ *       500:
+ *         description: Internal Server Error
  */
 export default async function handler(req, res) {
     const page = parseInt(req.query.page, 10) || 1;
-
     const url = ConfigService.themoviedb.urls.movies.discover + `?page=${page}`;
+
     const options = {
         method: 'GET',
         headers: {
@@ -30,11 +32,13 @@ export default async function handler(req, res) {
 
     switch (req.method) {
         case "GET":
-            const apiResponse = await fetch(url, options)
-                .then(r => r.json())
-                .catch(err => console.error('error:' + err));
-
-            res.json({status: 200, data: apiResponse.results});
+            try {
+                const apiResponse = await fetch(url, options).then(r => r.json());
+                res.json({status: 200, data: apiResponse.results});
+            } catch (error) {
+                console.error('Error:', error);
+                res.status(500).json({status: 500, error: 'Internal Server Error'});
+            }
             break;
     }
 }
