@@ -1,8 +1,5 @@
 import * as React from 'react';
 import {Link} from "@mui/material";
-// import ProTip from '../src/ProTip';
-// import Link from '../src/Link';
-// import Copyright from '../src/Copyright';
 
 export default function NavBar() {
     return (
