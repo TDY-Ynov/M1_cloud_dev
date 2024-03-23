@@ -3,6 +3,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
+import NavBar from "../../../components/navBar";
 
 export default function Movies() {
     const [movies, setMovies] = useState([]);
@@ -26,6 +27,7 @@ export default function Movies() {
 
     return (
         <Container maxWidth="sm">
+            <NavBar/>
             <Box sx={{ my: 4 }}>
                 <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
                     List of Movies
@@ -33,7 +35,7 @@ export default function Movies() {
                 <ul>
                     {Array.isArray(movies.data) && movies.data.map((movie) => (
                         <li key={movie.id}>
-                            <Link href={`/movies/${movie.id}`} passHref>
+                            <Link href={`/ui/movies/${movie.id}`} passHref>
                                 <p>{movie.title}</p>
                             </Link>
                         </li>

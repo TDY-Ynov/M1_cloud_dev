@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import NavBar from "../../../components/navBar";
+import Container from "@mui/material/Container";
 
 const MovieDetails = () => {
     const router = useRouter();
@@ -26,17 +28,21 @@ const MovieDetails = () => {
     }, [id]);
 
     if (!id) {
-        return null; // Si id n'est pas encore défini, ne rien afficher
+        return null;
     }
 
     return (
-        <div>
+        <Container maxWidth="sm">
+            <NavBar/>
+
+            <div>
             {movie ? (
                 <h1>{movie.title}</h1>
             ) : (
                 <p>Loading...</p>
             )}
         </div>
+        </Container>
     );
 };
 
