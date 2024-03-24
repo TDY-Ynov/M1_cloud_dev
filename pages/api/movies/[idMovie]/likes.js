@@ -1,4 +1,39 @@
 import clientPromise from "../../../../lib/mongodb";
+/**
+ * @swagger
+ * /api/movies/{idMovie}/likes:
+ *   patch:
+ *     description: Update like status for a movie by ID
+ *     parameters:
+ *       - in: path
+ *         name: idMovie
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the movie
+ *     responses:
+ *       201:
+ *         description: Like status updated
+ *       405:
+ *         description: Method Not Allowed
+ *   get:
+ *     description: Get like status for a movie by ID
+ *     parameters:
+ *       - in: path
+ *         name: idMovie
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the movie
+ *     responses:
+ *       200:
+ *         description: Success Response
+ *       404:
+ *         description: Not Found
+ *       405:
+ *         description: Method Not Allowed
+ */
+
 export default async function handler(req, res) {
     const idMovie = parseInt(req.query.idMovie, 10);
     const client = await clientPromise;
