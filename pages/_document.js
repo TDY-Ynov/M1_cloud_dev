@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Html, Head, Main, NextScript } from 'next/document';
 import { DocumentHeadTags, documentGetInitialProps } from '@mui/material-nextjs/v14-pagesRouter';
-import theme from './src/theme/theme';
+import theme from '../src/theme/theme';
 export default function MyDocument(props) {
     return (
         <Html lang="en">

@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import clientPromise from "/lib/mongodb";
-import {ConfigService} from "/services/config.service";
+import clientPromise from "../../../../lib/mongodb";
+import {ConfigService} from "../../../../src/services/config.service";
 
 
 /**

@@ -14,7 +14,7 @@ export default function NavBar() {
                     </ul>
                 </li>
             </ul>
-            <Link href="/ui/signIn">Sign In</Link>
+            <Link href="/ui/sign-in">Sign In</Link>
         </nav>
     );
 }

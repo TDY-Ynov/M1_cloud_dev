@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import {ConfigService} from "/services/config.service";
+import {ConfigService} from "../../../src/services/config.service";
 
 /**
  * @swagger
