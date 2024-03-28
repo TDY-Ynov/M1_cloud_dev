@@ -1,4 +1,6 @@
 const nextJest = require("next/jest");
+const path = require("node:path");
+require('dotenv').config({ path: path.resolve(__dirname, process.env.ENV_FILE || '.env') });
 const createJestConfig = nextJest({
 // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
     dir: "./",
