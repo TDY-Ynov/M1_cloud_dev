@@ -8,8 +8,8 @@ export const ConfigService = {
             }
         },
         keys: {
-            API_TOKEN: "changeMe",
-            API_KEY: "changeMe"
+            API_TOKEN: process.env.API_TOKEN,
+            API_KEY: process.env.API_KEY
         }
     },
     youtube: {
