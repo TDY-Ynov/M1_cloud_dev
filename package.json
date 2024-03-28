@@ -5,7 +5,7 @@
     "build": "next build",
     "start": "next start",
     "test": "ENV_FILE=.env.local jest --watchAll",
-    "test:ci": "jest --watchAll",
+    "test:ci": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
