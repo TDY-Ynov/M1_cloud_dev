@@ -55,7 +55,7 @@ jobs:
       - checkout
       - run:
           name: Deploy dev
-          command: echo "Deploying dev"
+          command: echo "Deploying develop"
 
   build-and-deploy-prod:
     executor: node/default
