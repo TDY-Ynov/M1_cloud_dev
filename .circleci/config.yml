@@ -88,11 +88,17 @@ workflows:
     jobs:
       # build
       - install-dependencies
-      - code-analysis
+      - code-analysis:
+          requires:
+            - install-dependencies
 
       # tests
-      - unit-tests
-      - integration-tests
+      - unit-tests:
+          requires:
+            - code-analysis
+      - integration-tests:
+          requires:
+            - unit-tests
 
       # deploy
       - prepare-deployment-environment:
@@ -119,5 +125,11 @@ workflows:
                 - main
 
       # check deployed
-      - verification-tests
-      - load-tests
+      - verification-tests:
+          requires:
+            - build-and-deploy-dev
+            - build-and-deploy-prod
+      - load-tests:
+          requires:
+            - build-and-deploy-dev
+            - build-and-deploy-prod
