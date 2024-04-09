@@ -25,6 +25,7 @@ jobs:
     environment:
       JEST_JUNIT_OUTPUT_DIR: ./test-results/
     steps:
+      - checkout
       - run:
           command: npm install jest-junit
       - run:
