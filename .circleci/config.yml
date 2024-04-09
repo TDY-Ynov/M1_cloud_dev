@@ -1,24 +1,123 @@
 version: 2.1
 orbs:
   node: circleci/node@5
+
 jobs:
-  test-node:
-    # Install node dependencies and run tests
+
+  install-dependencies:
     executor: node/default
-    environment:
-      JEST_JUNIT_OUTPUT_DIR: ./test-results/
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: npm
+
+  code-analysis:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Code analysis
+          command: |
+            echo "Running code analysis"
+
+  unit-tests:
+    executor: node/default
+    environment:
+      JEST_JUNIT_OUTPUT_DIR: ./test-results/
+    steps:
       - run:
           command: npm install jest-junit
       - run:
-          name: Run tests
+          name: Run unit tests
           command: npm run test:ci
       - store_test_results:
           path: ./test-results/
+
+  integration-tests:
+    executor: node/default
+    steps:
+      - run:
+          name: Run integ tests
+          command: echo "Running IT"
+
+  prepare-deployment-environment:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Preparing deployment environment
+          command: echo "Preparing deployment env"
+
+  build-and-deploy-dev:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Deploy dev
+          command: echo "Deploying dev"
+
+  build-and-deploy-prod:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Deploy prod
+          command: echo "Deploying main"
+
+  verification-tests:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Run verification tests
+          command: |
+            echo "Running verif tests"
+
+  load-tests:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Run load tests
+          command: |
+            echo "Running load tests"
+
+
 workflows:
   build-and-test:
     jobs:
-      - test-node
+      # build
+      - install-dependencies
+      - code-analysis
+
+      # tests
+      - unit-tests
+      - integration-tests
+
+      # deploy
+      - prepare-deployment-environment:
+          requires:
+            - integration-tests
+          filters:
+            branches:
+              only:
+                - develop
+                - main
+      - build-and-deploy-dev:
+          requires:
+            - prepare-deployment-environment
+          filters:
+            branches:
+              only:
+                - develop
+      - build-and-deploy-prod:
+          requires:
+            - prepare-deployment-environment
+          filters:
+            branches:
+              only:
+                - main
+
+      # check deployed
+      - verification-tests
+      - load-tests
