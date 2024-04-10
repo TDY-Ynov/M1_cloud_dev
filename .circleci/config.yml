@@ -58,12 +58,27 @@ jobs:
           command: echo "Deploying develop"
 
   build-and-deploy-prod:
-    executor: node/default
+    docker:
+      - image: cimg/node:20.5.0
+    environment:
+      VERCEL_ORG_ID: $VERCEL_ORG_ID
+      VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
     steps:
       - checkout
       - run:
-          name: Deploy prod
-          command: echo "Deploying main"
+        name: Install Vercel CLI
+        command: sudo npm install --global vercel@latest
+      - run:
+        name: Pull Vercel Environment Information
+        command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+      - run:
+        name: Build Project Artifacts
+        command: |
+          node --version
+          sudo vercel build --prod --token=$VERCEL_TOKEN
+      - run:
+        name: Deploy Project Artifacts to Vercel
+        command: sudo vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
 
   verification-tests:
     executor: node/default
