@@ -28,7 +28,7 @@ export default function Movies() {
         <Container maxWidth="sm">
             <Box sx={{my: 4}}>
                 <Typography variant="h4" component="h1" sx={{mb: 2}}>
-                    List of Movies
+                    Recommended movies
                 </Typography>
                 <ul>
                     {Array.isArray(movies.data) && movies.data.map((movie) => (
