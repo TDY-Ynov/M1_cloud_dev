@@ -1,6 +1,6 @@
 const nextJest = require("next/jest");
 const path = require("node:path");
-if (process.env.ENV_FILE){
+if (process.env.ENV_FILE===".env.local"){
 require('dotenv').config({ path: path.resolve(__dirname, process.env.ENV_FILE) });
 }
 const createJestConfig = nextJest({
