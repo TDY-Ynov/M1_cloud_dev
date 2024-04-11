@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import NavBar from "../../../components/navBar";
 import Container from "@mui/material/Container";
 
 const MovieDetails = () => {
@@ -33,8 +32,6 @@ const MovieDetails = () => {
 
     return (
         <Container maxWidth="sm">
-            <NavBar/>
-
             <div>
             {movie ? (
                 <h1>{movie.title}</h1>
