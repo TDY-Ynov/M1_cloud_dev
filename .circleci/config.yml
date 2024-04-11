@@ -78,9 +78,6 @@ jobs:
     environment:
       VERCEL_ORG_ID: $VERCEL_ORG_ID
       VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
-      MONGODB_URI: $MONGODB_URI
-      API_TOKEN: API_TOKEN
-      API_KEY: $API_KEY
     steps:
       - checkout
       - run:
