@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {Link} from "@mui/material";
+import {useAuth} from "../src/contexts/auth.context";
 
 export default function NavBar() {
+    const {user, logout} = useAuth();
     return (
         <nav>
             <ul>
@@ -14,7 +16,11 @@ export default function NavBar() {
                     </ul>
                 </li>
             </ul>
-            <Link href="/ui/sign-in">Sign In</Link>
+            {user ? (
+                <Link href="/" onClick={logout}>Logout</Link>
+            ) : (
+                <Link href="/ui/sign-in">Sign In</Link>
+            )}
         </nav>
     );
 }
