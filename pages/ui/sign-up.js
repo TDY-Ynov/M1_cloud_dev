@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -18,13 +16,33 @@ import {useRouter} from "next/router";
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    const handleSubmit = (event) => {
+
+    const router = useRouter();
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const formData = new FormData(event.currentTarget);
+        try {
+            const response = await fetch('/api/auth/sign-up', {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status == 201) {
+                router.push('/ui/sign-in');
+            } else {
+                const data = await response.json();
+                console.error('Failed to sign up : ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error signing up:', error);
+        }
     };
 
     return (
