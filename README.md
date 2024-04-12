@@ -28,15 +28,16 @@ v20.11.0
 ### Partie Backend
 
 - Définition des API du cahier des charges
-- Swagger opérationnel avec documentation de toutes les routes API (sauf pour l'authentification qui n'est pas encore en
-  place)
-- Lien fonctionnel entre le Backend et la base de données MongoDB
-    - Exemples de requêtes GET / POST / PUT / DELETE pour les likes et les utilisateurs
+- Swagger opérationnel avec documentation de toutes les routes API 
+- Lien fonctionnel entre le Backend et la base de données MongoDB (users pour l'auth)
+- Exemples de requêtes GET / POST / PUT / DELETE pour les likes et les utilisateurs
+- Implémentation de l'authentification
 
 ### Partie Frontend React
 
 - Liste des écrans qui consomment l'API backend : /ui/movies[/*]
 - Utilisation du framework graphique Material UI sur les pages de sign-in et sign-up
+- Présence de l'authentification, accès limité à la page d'accueil
 
 ### Tests Unitaires
 
@@ -59,7 +60,6 @@ Le lien vers l'environnement de prod, accessible publiquement : https://project-
 ## Objectifs à venir
 
 - Factoriser le code pour réduire la duplication, notamment en créant un service pour les requêtes vers l'API de TMDB
-- Implémenter l'authentification
 - Ajouter une fonctionnalité de recherche sur le site
 - Personnaliser l'app car très basique pour le moment
 
