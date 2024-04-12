@@ -1,4 +1,5 @@
 import clientPromise from "../../../lib/mongodb";
+import bcrypt from "bcrypt";
 
 export default async function handler(req, res) {
     const client = await clientPromise;
@@ -7,7 +8,13 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             const user = await db.collection("users").findOne({ email: req.body.email });
-            if (!user || user.password !== req.body.password) {
+
+            if (!user) {
+                return res.status(401).json({ status: 401, error: "Invalid email or password" });
+            }
+
+            const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+            if (!passwordMatch) {
                 return res.status(401).json({ status: 401, error: "Invalid email or password" });
             }
 

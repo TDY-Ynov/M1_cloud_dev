@@ -17,6 +17,7 @@
     "@mui/material": "latest",
     "@mui/material-nextjs": "latest",
     "@types/swagger-ui-react": "^4.18.3",
+    "bcrypt": "^5.1.1",
     "btoa": "^1.2.1",
     "dotenv": "^16.4.5",
     "formdata-node": "^6.0.3",

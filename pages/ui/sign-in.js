@@ -47,7 +47,6 @@ export default function SignIn() {
             if (response.status == 200) {
                 const data = await response.json();
                 login(data.userData);
-                router.push('/');
             } else {
                 console.error('Failed to sign in');
             }
